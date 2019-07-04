@@ -7,7 +7,10 @@ namespace BankRates
         public static void Main()
         {
             var client = CalculateBankRate(200, 2, 12, 1);
-            Console.WriteLine(client);
+
+            var client1 = new Client(200, 2, 12, 1);
+            var actual = client1.Rate();
+            Console.WriteLine(actual);
             Console.ReadLine();
         }
 
