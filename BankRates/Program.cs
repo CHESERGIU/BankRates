@@ -8,8 +8,9 @@ namespace BankRates
         {
             var client = CalculateBankRate(200, 2, 12, 1);
 
-            var client1 = new Client(200, 2, 12, 1);
-            var actual = client1.Rate();
+            var client1 = new Client("Jhon");
+            Loan jhon = new Loan(200, 2, 12);
+            var actual = client1.Loan(jhon);
             Console.WriteLine(actual);
             Console.ReadLine();
         }

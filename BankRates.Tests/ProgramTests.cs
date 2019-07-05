@@ -15,14 +15,21 @@ namespace BankRates.Tests
         [Fact]
         public void CalculateRateForFirstMonthWithClassClient()
         {
-            var client = new Client(200, 2, 12, 1);
+            var client = new Client("Jhon");
+            Loan jhon = new Loan(200, 2, 12);
+            var actual = client.Loan(jhon);
 
-            var principal = client.Principal();
-            var sold = client.Sold();
-            var rate = client.Rate();
-            Assert.Equal(100, principal);
-            Assert.Equal(200, sold);
-            Assert.Equal(102, rate);
+            Assert.Equal(101, actual);
+        }
+
+        [Fact]
+        public void CalculateRateForOneYear()
+        {
+            var client = new Client("Mary");
+            Loan mary = new Loan(1000, 1, 12);
+            var actual = client.Loan(mary);
+
+            Assert.Equal(1010, actual);
         }
     }
 }

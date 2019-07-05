@@ -4,48 +4,27 @@ namespace BankRates
 {
     public class Client
     {
-        const int MonthInAYear = 12;
-        const int Procent = 100;
+        readonly string name;
+        readonly int month = 12;
 
-        private readonly int currentMonth;
-        private readonly decimal interestPerYear;
-        private readonly int periodInMonth;
-        private readonly decimal total;
-
-        public Client(decimal total, int periodInMonth, decimal interestPerYear, int currentMonth)
+        public Client(string name)
         {
-            this.currentMonth = currentMonth;
-            this.interestPerYear = interestPerYear;
-            this.periodInMonth = periodInMonth;
-            this.total = total;
+            this.name = name;
         }
 
-        public int CurrentMonth => currentMonth;
-
-        public decimal InterestPerYear => interestPerYear;
-
-        public int PeriodInMonth => periodInMonth;
-
-        public decimal Total => total;
-
-        public decimal ExactInterestPerMonth()
+        public decimal Loan(Loan loan)
         {
-            return InterestPerYear / MonthInAYear / Procent;
+            if (loan == null)
+            {
+                return 0m;
+            }
+
+            decimal principal = loan.Principal();
+            decimal exactInterestPerMonth = loan.Interest(month);
+            decimal sold = (principal * month) - ((month - 1) * principal);
+            return principal + (sold * exactInterestPerMonth);
         }
 
-        public decimal Principal()
-        {
-            return Total / PeriodInMonth;
-        }
-
-        public decimal Rate()
-        {
-            return Principal() + (Sold() * ExactInterestPerMonth());
-        }
-
-        public decimal Sold()
-        {
-            return Total - ((CurrentMonth - 1) * Principal());
-        }
+        public override string ToString() => name;
     }
 }
