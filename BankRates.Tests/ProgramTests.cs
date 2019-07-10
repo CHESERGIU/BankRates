@@ -1,4 +1,3 @@
-using System;
 using Xunit;
 
 namespace BankRates.Tests
@@ -15,16 +14,21 @@ namespace BankRates.Tests
         [Fact]
         public void CalculateRateForFirstMonthWithClassLoans()
         {
+            // Given
             var client = new Client("Jhonny");
 
             Loan firstLoan = new Loan(1000, 18, 6);
             Loan secondLoan = new Loan(2000, 18, 5);
 
-            decimal actual = client.Debt(1, ref firstLoan) + client.Debt(1, ref secondLoan);
+            client.Loan(firstLoan);
+            client.Loan(secondLoan);
 
-            decimal expected = (firstLoan.Principal() + firstLoan.Balance(1) * firstLoan.Interest(1) / 12)
-                + (secondLoan.Principal() + secondLoan.Balance(1) * secondLoan.Interest(1) / 12);
+            // When
+            decimal actual = client.Debt(1);
 
+            decimal expected = firstLoan.TotalInterest(1) + secondLoan.TotalInterest(1);
+
+            // Then
             Assert.Equal(expected, actual);
         }
     }

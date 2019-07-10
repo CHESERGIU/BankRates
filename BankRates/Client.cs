@@ -4,18 +4,24 @@ namespace BankRates
 {
     public class Client
     {
-        readonly int months = 12;
         readonly string name;
         Loan[] loans;
 
         public Client(string name)
         {
             this.name = name;
+            this.loans = new Loan[] { };
         }
 
-        public decimal Debt(int month, ref Loan loan)
+        public decimal Debt(int month)
         {
-            return loan.Principal() + (loan.Balance(month) * loan.Interest(month) / months);
+            decimal debt = 0;
+            for (int i = 0; i < loans.Length; i++)
+            {
+                debt += loans[i].TotalInterest(month);
+            }
+
+            return debt;
         }
 
         public void Loan(Loan loan)

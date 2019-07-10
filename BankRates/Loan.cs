@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace BankRates
+﻿namespace BankRates
 {
     public class Loan
     {
@@ -10,6 +6,7 @@ namespace BankRates
         readonly decimal sum;
         readonly int periodInMonth;
         readonly decimal interestPerYear;
+        private readonly decimal months = 12;
 
         public Loan(decimal sum, int periodInMonth, decimal interestPerYear)
         {
@@ -31,6 +28,11 @@ namespace BankRates
         public decimal Balance(int month) // difference between the sum of debit entries and the sum of credit entries
         {
             return sum - ((month - 1) * Principal());
+        }
+
+        public decimal TotalInterest(int month)
+        {
+            return Principal() + Balance(month) * Interest(month) / months;
         }
     }
 }
