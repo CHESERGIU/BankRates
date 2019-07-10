@@ -10,10 +10,10 @@ namespace BankRates
 
             var jhon1 = new Loan(1000, 18, 6);
             var jhon2 = new Loan(2000, 18, 5);
-            var client1 = new Client("Jhon", jhon1);
-            var client2 = new Client("Jhon", jhon2);
 
-            decimal actual = client1.Debt(1) + client2.Debt(1);
+            var jhon = new Client("Jhon");
+
+            decimal actual = jhon.Debt(1, ref jhon1) + jhon.Debt(1, ref jhon2);
 
             Console.WriteLine(actual);
             Console.ReadLine();

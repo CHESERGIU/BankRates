@@ -13,31 +13,19 @@ namespace BankRates.Tests
         }
 
         [Fact]
-        public void CalculateRateForFirstMonthWithClassClient()
+        public void CalculateRateForFirstMonthWithClassLoans()
         {
-            Loan jhon1 = new Loan(1000, 18, 6);
-            Loan jhon2 = new Loan(2000, 18, 5);
-            var client = new Client("Jhon", jhon1);
-            var client1 = new Client("Jhon", jhon2);
-            decimal actual = client.Debt(1) + client1.Debt(1); // Debt(1) for 1 month on 2 loans
+            var client = new Client("Jhonny");
 
-            Assert.Equal(180, actual);
-        }
+            Loan firstLoan = new Loan(1000, 18, 6);
+            Loan secondLoan = new Loan(2000, 18, 5);
 
-        [Fact]
-        public void CalculateRateForOneYear()
-        {
-            Loan mary = new Loan(1000, 1, 12);
-            var client = new Client("Mary", mary);
-            decimal actual = client.Debt(1);
-            decimal actual1 = mary.Interest(1);
-            decimal actual2 = mary.Principal();
-            decimal actual3 = mary.Balance(1);
+            decimal actual = client.Debt(1, ref firstLoan) + client.Debt(1, ref secondLoan);
 
-            Assert.Equal(0.12.ToString(), actual1.ToString());
-            Assert.Equal(1000, actual2);
-            Assert.Equal(1000, actual3);
-            Assert.Equal(1010, actual);
+            decimal expected = (firstLoan.Principal() + firstLoan.Balance(1) * firstLoan.Interest(1) / 12)
+                + (secondLoan.Principal() + secondLoan.Balance(1) * secondLoan.Interest(1) / 12);
+
+            Assert.Equal(expected, actual);
         }
     }
 }

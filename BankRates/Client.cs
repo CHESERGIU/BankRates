@@ -4,30 +4,24 @@ namespace BankRates
 {
     public class Client
     {
-        readonly int month = 1;
         readonly int months = 12;
         readonly string name;
-        readonly Loan loan;
+        Loan[] loans;
 
-        public Client(string name, Loan loan)
+        public Client(string name)
         {
             this.name = name;
-            this.loan = loan;
         }
 
-        public decimal Debt(int month)
+        public decimal Debt(int month, ref Loan loan)
         {
             return loan.Principal() + (loan.Balance(month) * loan.Interest(month) / months);
         }
 
         public void Loan(Loan loan)
         {
-            if (loan == null)
-            {
-                return;
-            }
-
-            decimal debt = loan.Principal() + (loan.Balance(month) * loan.Interest(month) / months);
+            Array.Resize(ref loans, loans.Length + 1);
+            this.loans[loans.Length - 1] = loan;
         }
 
         public override string ToString() => name;
